@@ -109,7 +109,11 @@ ul { list-style: none; }
 
 /* ---------- services ---------- */
 #services { padding-inline: clamp(14px, 2.5vw, 49px); }
-.services { background: var(--blush) url('/img/sparkle-tile.png') 0 0 / 160px 160px; padding: clamp(28px, 4.7vw, 90px); box-shadow: 16px 16px 0 0 var(--coral), 16px 16px 0 var(--line) var(--brown); }
+.services::before { content: ''; position: absolute; inset: 0; border-radius: inherit; background: url('/img/sparkle-tile.png') 0 0 / 160px 160px; opacity: 0.6; pointer-events: none; }
+.services > :not(.stk) { position: relative; z-index: 1; }
+/* a soft blush cloud behind the heading text so the sparkles fade out around the words */
+.services-head > div { background: var(--blush); box-shadow: 0 0 26px 30px var(--blush); border-radius: 30px; }
+.services { background: var(--blush); padding: clamp(28px, 4.7vw, 90px); box-shadow: 16px 16px 0 0 var(--coral), 16px 16px 0 var(--line) var(--brown); }
 .services-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; flex-wrap: wrap; margin-bottom: clamp(28px, 3.2vw, 60px); }
 .service-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(20px, 2.3vw, 44px); }
 .service-card { display: grid; grid-template-columns: minmax(0, 0.44fr) minmax(0, 0.56fr); gap: clamp(16px, 1.9vw, 36px); align-items: center; background: var(--cream); border: var(--line) solid var(--brown); border-radius: clamp(26px, 2.5vw, 48px); padding: clamp(16px, 1.5vw, 28px); text-decoration: none; color: inherit; box-shadow: 8px 8px 0 var(--brown); }
@@ -299,6 +303,7 @@ ul { list-style: none; }
   .led { box-shadow: 8px 8px 0 0 var(--green), 8px 8px 0 var(--line) var(--brown); }
   #services, #led { padding-right: 22px; }
   .services { padding: 30px 16px 34px; }
+  .services-head > div { box-shadow: 0 0 10px 9px var(--blush); }
   .service-card { grid-template-columns: 116px minmax(0, 1fr); gap: 14px; padding: 12px; border-radius: 24px; box-shadow: 5px 5px 0 var(--brown); }
   .service-card img { aspect-ratio: 1 / 1; border-radius: 16px; }
   .service-card h3 { font-size: 23px; margin-bottom: 4px; }
