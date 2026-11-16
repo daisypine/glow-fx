@@ -312,7 +312,7 @@ ul { list-style: none; }
   .ba-card { box-shadow: 9px 9px 0 0 var(--back), 9px 9px 0 var(--line) var(--brown); }
   .exp-photo { box-shadow: 9px 9px 0 0 var(--back), 9px 9px 0 var(--line) var(--brown); margin-right: 9px; }
   .hero-art { width: min(78%, 360px); }
-  .exp-photo img { aspect-ratio: 16 / 9; object-position: 30% center; }
+  .exp-photo img { aspect-ratio: 2.7 / 1; object-position: center; }
   .meet-photo > img:first-child { aspect-ratio: 4 / 4.2; }
   .led { padding: 22px 18px 30px; }
   .led-photo { aspect-ratio: 16 / 10; object-position: center 20%; }
