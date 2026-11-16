@@ -5,11 +5,11 @@
 export const site = {
   name: 'Glow FX',
   gbpName: 'Glow FX - Lashes & Lifts',
-  owner: 'Destiny',
+  owner: 'Destiny Foad',
   url: 'https://glow-fx.com',
   phone: '(669) 600-0399',
   phoneHref: 'tel:+16696000399',
-  email: 'info@glow-fx.com', // CONFIRM spelling
+  email: 'info@glow-fx.com',
   address: {
     venue: 'Salon Republic, Suite #906',
     street: '200 W McKinley Ave',
@@ -75,6 +75,15 @@ export const services = [
     pos: 'center 30%',
   },
 ];
+
+// Not shown on the homepage yet. Goes on the Lash Extensions and Korean Lash Extensions pages.
+// PLACEHOLDER price based on nearby studios (their Korean/anime sets sit between hybrid and volume).
+// Destiny's menu: Hybrid $220, Volume $250. Replace with her real name, price and description.
+export const koreanStyleSet = {
+  name: 'Korean-Style Set',
+  price: '$235', // CONFIRM with Destiny
+  desc: 'A wispy, spiky, doll-eyed look inspired by Korean lash trends.', // Claude wording, CONFIRM
+};
 
 export const beforeAfter = [
   { before: 'lash-lift-before.webp', after: 'lash-lift-after.webp', label: 'lash lift', tone: 'peach' },
