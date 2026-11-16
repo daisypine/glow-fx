@@ -1,0 +1,329 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, nav, services, beforeAfter, steps, led, reviews, faqs } from '../data/site';
+
+// 12-point starburst for the numbered badges
+const star = (() => {
+  const pts: string[] = [];
+  for (let i = 0; i < 24; i++) {
+    const r = i % 2 === 0 ? 46 : 37;
+    const a = (Math.PI / 12) * i - Math.PI / 2;
+    pts.push(`${(50 + r * Math.cos(a)).toFixed(2)},${(50 + r * Math.sin(a)).toFixed(2)}`);
+  }
+  return pts.join(' ');
+})();
+const marquee = Array.from({ length: 12 });
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+
+<Base
+  title="Lash Extensions & Korean Lash Lifts in Sunnyvale | Glow FX"
+  description="Glow FX is Destiny's private lash and brow studio in Sunnyvale, CA. LED lash extensions, Korean lash lifts and brows, one client at a time. Book online."
+  noindex={true}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <!-- PROMO BANNER -->
+  <a class="promo" href={site.booking} target="_blank" rel="noopener">
+    <img class="promo-stk wiggle" src="/img/sticker-sparkle.webp" alt="" width="237" height="256" />
+    <span class="promo-new">New here?</span>
+    <span class="promo-badge">{site.promo.offer}</span>
+    <span class="promo-line">{site.promo.line}</span>
+    <span class="promo-mobile">first lash lift or new set · code <b>{site.promo.code}</b></span>
+    <span class="promo-code"><small>USE CODE</small> {site.promo.code}</span>
+    <span class="promo-btn">Book Now</span>
+    <img class="promo-stk wiggle alt" src="/img/sticker-heart.webp" alt="" width="283" height="256" />
+  </a>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="wrap header-in">
+      <a class="logo" href="/" aria-label="Glow FX home">
+        <img src="/img/glow-fx-logo.webp" alt="Glow FX" width="400" height="244" />
+      </a>
+      <button class="menu-btn" aria-controls="nav" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+      <nav id="nav" class="nav" aria-label="Main">
+        {nav.map((n) => <a href={n.href}>{n.label}</a>)}
+        <a class="btn btn-cream nav-book" href={site.booking} target="_blank" rel="noopener">Book Here</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero-wrap" id="top">
+      <div class="hero panel-outline">
+        <p class="wordmark" aria-hidden="true">GLOW FX</p>
+        <div class="hero-copy">
+          <h1>Lash Extensions &amp; Korean Lash Lifts in Sunnyvale, CA</h1>
+          <p>
+            Hi, I'm Destiny - I run a quiet little studio inside Salon Republic where every appointment is just you and me. I
+            customize each set to your eyes and keep your natural lashes healthy along the way.
+          </p>
+          <a class="btn btn-cream pop" href={site.booking} target="_blank" rel="noopener">Book Now</a>
+        </div>
+        <div class="hero-art">
+          <img class="hero-portrait" src="/img/destiny-sticker-portrait.webp" alt="Destiny, lash artist and owner of Glow FX" width="580" height="782" fetchpriority="high" />
+          <img class="stk stk-lash float" src="/img/sticker-lash.webp" alt="" width="287" height="161" />
+          <img class="stk stk-flower spin-slow" src="/img/sticker-flower.webp" alt="" width="273" height="288" />
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section" id="services">
+      <div class="services panel-outline">
+        <img class="stk stk-fan float" src="/img/sticker-fan.webp" alt="" width="240" height="250" loading="lazy" />
+        <img class="stk stk-wand float d2" src="/img/sticker-wand.webp" alt="" width="239" height="279" loading="lazy" />
+        <img class="stk stk-tweezers float d3" src="/img/sticker-tweezers.webp" alt="" width="287" height="261" loading="lazy" />
+        <img class="stk stk-brow float d2" src="/img/sticker-brow.webp" alt="" width="324" height="147" loading="lazy" />
+        <div class="services-head" data-reveal>
+          <div>
+            <h2 class="display">Our Signature <em>Services</em></h2>
+            <p class="lede">
+              Every service starts with a quick chat about your eyes, your routine, and the look you’re after - then I tailor
+              everything from there.
+            </p>
+          </div>
+          <a class="btn btn-peach pop" href={site.booking} target="_blank" rel="noopener">View Full Menu &amp; Pricing</a>
+        </div>
+        <div class="service-grid">
+          {
+            services.map((s, i) => (
+              <a class="service-card pop lift" href="https://glow-fx.com/service/" data-reveal>
+                <img src={`/img/${s.img}`} alt={s.alt} width="404" height="444" decoding="async" style={`object-position:${s.pos}`} />
+                <div class="service-text">
+                  <h3>{s.name}</h3>
+                  <p>{s.desc}</p>
+                  <div class="service-foot">
+                    <span class={`pill tone-${s.tone}`}>{s.price}</span>
+                    <span class="arrow" aria-hidden="true">→</span>
+                  </div>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        {marquee.map(() => <span>GLOW FX <i>•</i></span>)}
+        {marquee.map(() => <span>GLOW FX <i>•</i></span>)}
+      </div>
+    </div>
+
+    <!-- BEFORE & AFTER -->
+    <section class="section wrap ba" id="results">
+      <h2 class="display center" data-reveal>Before &amp; <em>After</em></h2>
+      <p class="lede center" data-reveal>Real clients, real results.</p>
+      <div class="ba-grid">
+        {
+          beforeAfter.map((b, i) => (
+            <figure class={`ba-card lift backing-${b.tone}`} data-reveal>
+              <div class="ba-img">
+                <img src={`/img/${b.before}`} alt={`Before: Glow FX client ahead of a ${b.label}`} width="1040" height="522" loading="lazy" />
+                <span class="tag">Before</span>
+              </div>
+              <div class="ba-img">
+                <img src={`/img/${b.after}`} alt={`After: the same client following a ${b.label}`} width="1040" height="522" loading="lazy" />
+                <span class="tag tag-after">After</span>
+              </div>
+            </figure>
+          ))
+        }
+      </div>
+      <p class="center" data-reveal>
+        <a class="btn btn-peach pop" href="https://glow-fx.com/gallery/">See the Full Gallery</a>
+      </p>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="section wrap experience" id="experience">
+      <div class="exp-intro" data-reveal>
+        <h2 class="display two-tone">The Glow FX <em>Experience</em></h2>
+        <div class="prose">
+          <p>
+            Glow FX is just me - no rotating staff, no rushed appointments. My studio is a calm, quiet space where you can
+            fully relax while I work. Whether you want a low-maintenance Korean Lash Lift, full-glam Mega Volume, or
+            perfectly shaped brows, I take my time with every detail so you leave loving what you see.
+          </p>
+          <p>When you come in, I want it to feel familiar - like visiting someone you already know.</p>
+        </div>
+      </div>
+      <div class="exp-photo backing-pink" data-reveal>
+        <img src="/img/lash-extensions-close-up-wide.webp" alt="Close-up of a Glow FX client's lash extensions and brows" width="1640" height="515" loading="lazy" />
+      </div>
+      <p class="script" data-reveal>Your visit, start to finish</p>
+      <div class="steps">
+        {
+          steps.map((s, i) => (
+            <article class="step pop lift" data-reveal>
+              <div class="step-top">
+                <span class={`pill tone-${s.tone}`}>Step {i + 1}</span>
+                <img class="wiggle-hover" src={`/img/${s.sticker}`} alt="" width="120" height="120" loading="lazy" />
+              </div>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </article>
+          ))
+        }
+      </div>
+      <p class="center" data-reveal>
+        <a class="btn btn-pink pop" href="https://glow-fx.com/service/#Services_row">How to Prepare for Your Appointment</a>
+      </p>
+    </section>
+
+    <!-- LED -->
+    <section class="section" id="led">
+      <div class="led panel-outline backing-green">
+        <img data-reveal class="led-photo" src="/img/led-lash-extensions-client.webp" alt="Glow FX client wearing LED-bonded lash extensions" width="593" height="732" loading="lazy" />
+        <div class="led-copy">
+          <h2 class="display" data-reveal>LED Light Lashes <em>A Better Bond</em></h2>
+          <p class="lede wide" data-reveal>
+            If your lashes never seem to last as long as you’d like, the secret is in the glue. I use a specialized
+            LED-activated adhesive throughout your entire application, then cure it with LED light for a bond that’s
+            stronger, more flexible, and longer-lasting than traditional glue.
+          </p>
+          <ul class="benefits">
+            {
+              led.map((b, i) => (
+                <li data-reveal>
+                  <span class="badge">
+                    <svg viewBox="0 0 100 100" aria-hidden="true"><polygon class={`tone-${b.tone}`} points={star} /></svg>
+                    <b>{i + 1}</b>
+                  </span>
+                  <span>
+                    <strong>{b.title}</strong>
+                    {b.text}
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+          <p class="script small" data-reveal>Same application time. Noticeably better results.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MEET DESTINY -->
+    <section class="meet" id="meet">
+      <div class="wrap meet-in">
+        <div class="meet-copy" data-reveal>
+          <h2 class="script-head"><span>Meet</span> <em>Destiny</em></h2>
+          <p>
+            I'm the lashes, the brows, and the friendly face behind Glow FX. I started my lash journey in 2018, opened my
+            own salon, and quickly fell in love with the community that came with it. These days you'll find me in studio
+            #906 - an outdoorsy Canadian girl with two Aussie shepherds at home and a serious soft spot for healthy lashes.
+            My goal every time: that you leave feeling taken care of.
+          </p>
+          <p class="signature">See you in the studio, Destiny</p>
+          <a class="btn btn-peach pop" href="https://glow-fx.com/about/">Learn More About Me</a>
+        </div>
+        <div class="meet-photo" data-reveal>
+          <img src="/img/destiny-with-her-dog.webp" alt="Destiny holding one of her Australian Shepherds" width="677" height="697" loading="lazy" />
+          <img class="stk stk-heart float" src="/img/sticker-heart.webp" alt="" width="283" height="256" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section class="section wrap reviews" id="reviews">
+      <img class="stk stk-rainbow float" src="/img/sticker-rainbow.webp" alt="" width="320" height="245" loading="lazy" />
+      <h2 class="display center" data-reveal>Real Results, Healthy Lashes</h2>
+      <p class="lede center" data-reveal>
+        These are my real clients - I customize every set to enhance what you already have, and your natural lash health
+        always comes first.
+      </p>
+      <p class="kicker center" data-reveal>Kind Words from Real Clients</p>
+      <div class="review-grid">
+        {
+          reviews.map((r, i) => (
+            <figure class="review lift" data-reveal tabindex="0">
+              <span class="quote" aria-hidden="true">“</span>
+              <blockquote>{r.text}</blockquote>
+              <figcaption>
+                <span>
+                  <b>{r.name}</b>
+                  <small>Google review</small>
+                </span>
+                <span class="stars" aria-label="5 out of 5 stars">★★★★★</span>
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
+      <p class="center" data-reveal>
+        <a class="textlink" href={site.maps} target="_blank" rel="noopener">Read all reviews on Google</a>
+      </p>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section wrap faq" id="faq">
+      <h2 class="display" data-reveal>Frequently Asked Questions</h2>
+      <div class="faq-list" data-reveal>
+        {
+          faqs.map((f) => (
+            <details>
+              <summary>
+                {f.q}
+                <span class="chev" aria-hidden="true">↓</span>
+              </summary>
+              <div class="answer"><p>{f.a}</p></div>
+            </details>
+          ))
+        }
+        <a class="btn btn-pink pop" href="https://glow-fx.com/service/#faq_section">Read the FAQs</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p class="find" aria-hidden="true"><span>Find the</span> <span>Studio</span></p>
+    <div class="footer-body">
+      <img class="stk stk-sparkle spin-slow" src="/img/sticker-sparkle.webp" alt="" width="237" height="256" loading="lazy" />
+      <nav class="footer-nav" aria-label="Footer">
+        {nav.map((n) => <a href={n.href}>{n.label}</a>)}
+      </nav>
+      <div class="footer-cols wrap">
+        <div>
+          <h2>Visit</h2>
+          <p>{site.address.venue}</p>
+          <p>{site.address.street}, {site.address.city}, {site.address.region} {site.address.postal}</p>
+          <p>{site.parking}</p>
+          <p><a class="textlink light" href={site.maps} target="_blank" rel="noopener">Open in Google Maps</a></p>
+        </div>
+        <div>
+          <h2>Hours</h2>
+          <p>{site.hours}</p>
+          <p>{site.days}</p>
+          <p><a class="btn btn-peach" href={site.booking} target="_blank" rel="noopener">Book Here</a></p>
+        </div>
+        <div>
+          <h2>Say hi</h2>
+          <p><a href={site.phoneHref}>{site.phone}</a> · Call or text</p>
+          <p><a href={`mailto:${site.email}`}>{site.email}</a></p>
+          <p>
+            <a class="social" href={site.instagram} target="_blank" rel="noopener" aria-label="Glow FX on Instagram">
+              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6A3.6 3.6 0 0 0 16.4 4H7.6m9.65 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg>
+            </a>
+          </p>
+        </div>
+      </div>
+      <p class="copy wrap">© 2026 Glow FX. All Rights Reserved</p>
+    </div>
+  </footer>
+
+  <!-- MOBILE CALL BAR -->
+  <div class="callbar">
+    <a href={site.phoneHref}>Call or text</a>
+    <a class="primary" href={site.booking} target="_blank" rel="noopener">Book now</a>
+  </div>
+</Base>

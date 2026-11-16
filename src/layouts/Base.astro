@@ -1,0 +1,108 @@
+---
+import '@fontsource/ovo/latin-400.css';
+import '@fontsource/alice/latin-400.css';
+import '@fontsource/pacifico/latin-400.css';
+import '@fontsource/poppins/latin-500.css';
+import '@fontsource/poppins/latin-700.css';
+import '@fontsource/satisfy/latin-400.css';
+import '../styles/global.css';
+import { site } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+}
+const { title, description, noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'BeautySalon',
+  name: site.name,
+  url: site.url,
+  telephone: '+1-669-600-0399',
+  image: `${site.url}/img/destiny-sticker-portrait.webp`,
+  priceRange: '$20-$310',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: `${site.address.street}, Suite 906`,
+    addressLocality: site.address.city,
+    addressRegion: site.address.region,
+    postalCode: site.address.postal,
+    addressCountry: 'US',
+  },
+  areaServed: 'Sunnyvale, CA',
+  openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Thursday', 'Friday', 'Saturday'], description: 'By appointment only' },
+  ],
+  sameAs: [site.maps, site.instagram],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={`${site.url}/img/destiny-sticker-portrait.webp`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/img/glow-fx-logo.webp" />
+    <link rel="preload" as="image" href="/img/destiny-sticker-portrait.webp" fetchpriority="high" />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <slot />
+    <script is:inline>
+      (function () {
+        var els = [].slice.call(document.querySelectorAll('[data-reveal]'));
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduce || !('IntersectionObserver' in window)) {
+          els.forEach(function (el) { el.classList.add('in', 'done'); });
+        } else {
+          // Stagger siblings so a row of cards arrives one after another, left to right.
+          els.forEach(function (el) {
+            var sibs = [].slice.call(el.parentNode.children).filter(function (c) { return c.hasAttribute('data-reveal'); });
+            el.style.setProperty('--d', Math.min(sibs.indexOf(el), 5) * 130 + 'ms');
+          });
+          var timers = new WeakMap();
+          var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+              var el = e.target;
+              if (e.isIntersecting) {
+                el.classList.add('in');
+                timers.set(el, setTimeout(function () { el.classList.add('done'); }, 1700));
+              } else if (e.boundingClientRect.top > 0) {
+                // Left through the bottom of the screen (scrolling back up): play it in reverse.
+                clearTimeout(timers.get(el));
+                el.classList.remove('in', 'done');
+              }
+            });
+          }, { rootMargin: '0px 0px -12% 0px', threshold: 0 });
+          els.forEach(function (el) { io.observe(el); });
+        }
+        var header = document.querySelector('.header');
+        var onScroll = function () { header && header.classList.toggle('scrolled', window.scrollY > 40); };
+        window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+        var btn = document.querySelector('.menu-btn');
+        var navEl = document.getElementById('nav');
+        if (btn && navEl) btn.addEventListener('click', function () {
+          var open = navEl.classList.toggle('open');
+          btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+      })();
+    </script>
+  </body>
+</html>
