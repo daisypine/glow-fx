@@ -24,7 +24,7 @@ export const site = {
     'https://www.fresha.com/a/glow-fx-sunnyvale-200-west-mckinley-avenue-q81nzbe6/booking?menu=true&share=true&pId=2997205',
   maps: 'https://www.google.com/maps/place/?q=place_id:ChIJbzlvDQa3j4AR6lFLvuIbwb0',
   instagram: 'https://www.instagram.com/glowfx.co/',
-  tiktok: '', // CONFIRM handle
+  tiktok: 'https://www.tiktok.com/@glow.fx.sunnyvale',
   promo: { code: 'SAVE20', offer: '20% OFF', line: 'your first lash lift or new extension set' },
 };
 
@@ -57,21 +57,12 @@ export const services = [
     pos: 'center 35%',
   },
   {
-    name: 'Lash Lifts',
-    desc: 'A low-maintenance curl for your natural lashes.',
-    price: 'From $110',
-    img: 'lash-lift-after.webp',
-    alt: 'Natural lashes curled upward after a lash lift',
-    tone: 'green',
-    pos: 'center',
-  },
-  {
     name: 'Brow Artistry',
     desc: 'Shaped, groomed brows made for your face.',
     price: 'From $20',
     img: 'brow-shaping-result.webp',
     alt: 'Glow FX client with shaped, groomed brows',
-    tone: 'peach',
+    tone: 'green',
     pos: 'center 30%',
   },
 ];

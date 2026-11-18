@@ -42,7 +42,7 @@ Build command `npm run build`, output directory `dist`, Node version from `.node
 
 ## Before launch
 - [ ] Destiny approves the homepage
-- [ ] Confirm: TikTok handle, Korean Lash Lift card wording, SAVE20 still running
+- [ ] Confirm: Korean Lash Lift card wording, SAVE20 still running (TikTok confirmed: @glow.fx.sunnyvale)
 - [ ] Korean-Style Set is a placeholder at $235 in `src/data/site.ts`. Get Destiny's real name, price and description
 - [ ] Copy all 9 Google reviews word for word with dates
 - [ ] Build inner pages: 5 service pages, About, Gallery, Blog + LED post, Booking Policies, 4 legal pages
